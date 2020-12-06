@@ -58,22 +58,27 @@ Depending on the angle and the location of the lines in the image, the new funct
 
 ### 2. Identify potential shortcomings with your current pipeline
 
-
 The current pipeline have the following shortcomings:
 
-- The draw_lanes() function cannot detect vertical lines as the function uses Cartesian coordinates to compute slope of the line. If the line is vertical, the function cannot compute its slope and classify whether the line is part of left or right lane.
+- The `draw_lanes()` function cannot detect vertical lines as the function uses Cartesian coordinates to compute slope of the line. If the line is vertical, the function cannot compute its slope and classify whether the line is part of left or right lane.
 
 - In order to detect lane markings further down the road, `max_line_length` of Hough Transform algorithm needs to be tuned to a lower value. This also allows noises that are not part of a lane to be picked up by the algorithm.
 
-- The draw_lanes() extrapolates straight lanes based on averages of lines. If the lane markings are not aligned on the road, there will be substantial oscillation in the lateral position and the angle of the detected lanes. 
+- The `draw_lanes()` function extrapolates straight lanes based on averages of lines. If the lane markings are not aligned on the road, there will be substantial oscillation in the lateral position and the angle of the detected lanes. 
 
-- The draw_lanes() extrapolates straight lanes to the edge of the detection area. If the vehicle path curvature increases, the extrapolated lanes would project poorly onto the actual lane, as evident in the attempt of applying the pipeline on the optional challenge video.
+- The `draw_lanes()` function extrapolates straight lanes to the edge of the detection area. If the vehicle path curvature increases, the extrapolated lanes would project poorly onto the actual lane, as evident in the attempt of applying the pipeline on the optional challenge video.
 
 - Also evident in the optional challenge video is that the pipeline cannot detect lane markings that have little contrast against the road. Since Canny Edge Detection functions by highlighting gradient in the image. If there is too little gradient (e.g. faded lane marking) or too much variation in gradient (e.g. shades from trees), the pipeline will either detect nothing or pick up too much noises.
 
 
 ### 3. Suggest possible improvements to your pipeline
 
-A possible improvement would be to ...
+The current pipeline can benefit from the following improvements:
 
-Another potential improvement could be to ...
+- The `draw_lanes()` function can be modified to detect vertical lines using Polar coordinates.
+
+- Filtering techniques can be applied to video stream to filter out noises picked up by the Hough Transform algorithm.
+
+- Instead of extrapolating straight lanes, the `draw_lanes()` function can be expanded to draw curved lanes using higher order polynomials to piece together the line segments from Hough Transform algorithm.
+
+- In addition to using Canny Edge Detection algorithm, the pipeline can also include detection of other features (e.g. Color gradient) in order to improve robustness of lane markings in different lighting or contrast condition.
