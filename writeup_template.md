@@ -27,7 +27,7 @@ The goals / steps of this project are the following:
 
 ### 1. Describe your pipeline. As part of the description, explain how you modified the draw_lines() function.
 
-My pipeline consisted of the following steps. 
+My pipeline consists of the following steps: 
 
 1. Images are converted to grayscale
 
@@ -39,6 +39,8 @@ My pipeline consisted of the following steps.
 
 5. Hough Transform algorithm is applied on the masked image to extract lines from the image
 
+6. Line image is then superimposed onto the original image
+
 Below is the before and after an image is processed by the pipeline
 
 **Before**
@@ -49,9 +51,9 @@ Below is the before and after an image is processed by the pipeline
 
 ![alt text][image2]
 
-In order to draw a single line on the left and right lanes, draw_lines() function was modified to perform averaging of the slopes and the positions of the lines extracted by Hough Transform algorithm. However, the average is easily affected by smaller lines that are detected but are not part of the lane. Therefore, a weighted average is performed instead.
+In order to draw a single line on the left and right lanes, `draw_lines()` function was modified to perform averaging of the slopes and the positions of the lines extracted by Hough Transform algorithm. However, the averages are easily affected by smaller lines that are detected but are not part of the lane. Therefore, a weighted average is performed instead.
 
-Depending on the angle and the location of the lines in the image, the new function, draw_lanes(), classifies the line as part of left or right lane. A weighted average is then applied to all the lines in the respective lane. The longer the line, the higher the weight. The averaged left and right line is then extrapolated to the edge of the detection area to form the left and right lanes
+Depending on the angle and the location of the lines in the image, the new function, `draw_lanes()`, classifies the line as part of left or right lane. A weighted average is then applied to all the lines in the respective lane. The longer the line, the higher the weight. The averaged left and right lines are then extrapolated to the edge of the detection area to form the left and right lanes
 
 ![alt text][image3]
 
@@ -64,11 +66,11 @@ The current pipeline have the following shortcomings:
 
 - In order to detect lane markings further down the road, `max_line_length` of Hough Transform algorithm needs to be tuned to a lower value. This also allows noises that are not part of a lane to be picked up by the algorithm.
 
-- The `draw_lanes()` function extrapolates straight lanes based on averages of lines. If the lane markings are not aligned on the road, there will be substantial oscillation in the lateral position and the angle of the detected lanes. 
+- The `draw_lanes()` function extrapolates straight lanes based on averages of lines. If the lane markings are not aligned on the road, there could be noticeable oscillation in the lateral position and the angle of the detected lanes. 
 
 - The `draw_lanes()` function extrapolates straight lanes to the edge of the detection area. If the vehicle path curvature increases, the extrapolated lanes would project poorly onto the actual lane, as evident in the attempt of applying the pipeline on the optional challenge video.
 
-- Also evident in the optional challenge video is that the pipeline cannot detect lane markings that have little contrast against the road. Since Canny Edge Detection functions by highlighting gradient in the image. If there is too little gradient (e.g. faded lane marking) or too much variation in gradient (e.g. shades from trees), the pipeline will either detect nothing or pick up too much noises.
+- Also evident in the optional challenge video is that the pipeline cannot detect lane markings that have little contrast against the road. Since Canny Edge Detection algorithm functions by highlighting gradient in the image, the pipeline will either detect nothing or pick up too much noises if there is too little gradient (e.g. faded lane marking) or too much variation in gradient (e.g. shades from trees)
 
 
 ### 3. Suggest possible improvements to your pipeline
@@ -81,4 +83,4 @@ The current pipeline can benefit from the following improvements:
 
 - Instead of extrapolating straight lanes, the `draw_lanes()` function can be expanded to draw curved lanes using higher order polynomials to piece together the line segments from Hough Transform algorithm.
 
-- In addition to using Canny Edge Detection algorithm, the pipeline can also include detection of other features (e.g. Color gradient) in order to improve robustness of lane markings in different lighting or contrast condition.
+- In addition to using Canny Edge Detection algorithm, the pipeline can also include detection of other road features (e.g. Color) in order to improve likelihood of detecting lane markings in different lighting or contrast condition.
