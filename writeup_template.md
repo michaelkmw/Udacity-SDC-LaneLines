@@ -15,7 +15,8 @@ The goals / steps of this project are the following:
 
 [//]: # (Image References)
 
-[image1]: ./examples/grayscale.jpg "Grayscale"
+[image1]: ./test_images/solidWhiteCurve.jpg "solidWhiteCurve"
+[image2]: ./test_images_output/segment_solidWhiteCurve.png "segment_solidWhiteCurve"
 
 ---
 
@@ -23,7 +24,25 @@ The goals / steps of this project are the following:
 
 ### 1. Describe your pipeline. As part of the description, explain how you modified the draw_lines() function.
 
-My pipeline consisted of 5 steps. First, I converted the images to grayscale, then I .... 
+My pipeline consisted of the following steps. 
+
+1. Images are converted to grayscale
+
+2. Resulting grayscale image is smoothed through Gaussian smoothing / blurring with a kernel size of 5
+
+3. Canny Edge Detector algorithm is applied on the blurred image with threshold of [90, 180]
+
+4. A mask is applied on the resulting image to detect edges in the region of interest
+
+5. Hough Transform algorithm is applied on the masked image to extract lines from the image
+
+Below is the before and after an image is processed by the pipeline
+
+**Before**
+![alt text][image1]
+
+**After**
+![alt text][image2]
 
 In order to draw a single line on the left and right lanes, I modified the draw_lines() function by ...
 
