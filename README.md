@@ -24,6 +24,8 @@ conda install jupyter notebook
 Usage
 ---
 
+For a quickview of the results, open `P1.html` in the repository
+
 **NOTE:** Activate the `carnd-term1` environment before opening the notebook
 
 ```
