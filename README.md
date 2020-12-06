@@ -44,4 +44,4 @@ jupyter notebook
 
 Once the notebook is opened, the cells in the notebook can be run to detect lane lines on the roads in test images and videos.
 
-Images and videos from `test_(type)` folder will be processed, and the results are saved to `test_(type)_output`.
+Images and videos from `test_(type)` folder will be processed, and the results are saved to `test_(type)_output` folder.
