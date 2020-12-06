@@ -16,7 +16,8 @@ The goals / steps of this project are the following:
 [//]: # (Image References)
 
 [image1]: ./test_images/solidWhiteCurve.jpg "solidWhiteCurve"
-[image2]: ./test_images_output/segment_solidWhiteCurve.png "segment_solidWhiteCurve"
+
+[image2]: ./test_images_output/segment_solidWhiteCurve.jpg "segment_solidWhiteCurve"
 
 ---
 
@@ -28,9 +29,9 @@ My pipeline consisted of the following steps.
 
 1. Images are converted to grayscale
 
-2. Resulting grayscale image is smoothed through Gaussian smoothing / blurring with a kernel size of 5
+2. Resulting grayscale image is smoothed through Gaussian smoothing / blurring
 
-3. Canny Edge Detector algorithm is applied on the blurred image with threshold of [90, 180]
+3. Canny Edge Detector algorithm is applied on the blurred image
 
 4. A mask is applied on the resulting image to detect edges in the region of interest
 
@@ -39,16 +40,16 @@ My pipeline consisted of the following steps.
 Below is the before and after an image is processed by the pipeline
 
 **Before**
+
 ![alt text][image1]
 
 **After**
+
 ![alt text][image2]
 
-In order to draw a single line on the left and right lanes, I modified the draw_lines() function by ...
+In order to draw a single line on the left and right lanes, draw_lines() function was modified to perform averaging of the slopes and the positions of the lines extracted by Hough Transform algorithm. However, the average is easily affected by smaller lines that are detected but are not part of the lane. Therefore, a weighted average is performed instead.
 
-If you'd like to include images to show how the pipeline works, here is how to include an image: 
-
-![alt text][image1]
+Depending on the slope and the location of the lines in the image, the new function, draw_lanes(), will classify the line as part of left or right lane. A weighted average is then applied to all the lines in the respective lane. The longer the line, the higher the weight. The averaged left and right line is then extrapolated to the edge of the detection area to form the left and right lanes
 
 
 ### 2. Identify potential shortcomings with your current pipeline
